@@ -1,5 +1,6 @@
 package com.example.task.service.impl;
 
+import com.example.task.dto.AnswerRequest;
 import com.example.task.dto.TaskRequest;
 import com.example.task.dto.TaskResponse;
 import com.example.task.entity.Task;
@@ -53,5 +54,31 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    @Override
+    public Boolean answer(AnswerRequest request) {
+        Optional<User> user = userRepository.findByNickname(request.getNickname());
+        if (user.isEmpty())
+            throw new BadRequestException("user with this nickname is not found!");
+        Optional<Task> task = taskRepository.findById(request.getTaskId());
+        if (task.isEmpty())
+            throw new BadRequestException("task is not found!");
+        if (request.getAnswer().equals(task.get().getAnswer())){
+            List<User> answeredUsers = task.get().getAnsweredUsers();
+            if (!answeredUsers.contains(user.get())){
+                answeredUsers.add(user.get());
+                task.get().setAnsweredUsers(answeredUsers);
+                taskRepository.save(task.get());
+                List<Task> userAnsweredTasks = user.get().getAnsweredTasks();
+                userAnsweredTasks.add(task.get());
+                user.get().setAnsweredTasks(userAnsweredTasks);
+                user.get().setPoints(user.get().getPoints()+task.get().getPoint());
+                userRepository.save(user.get());
+
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.task.service;
 
+import com.example.task.dto.AnswerRequest;
 import com.example.task.dto.TaskRequest;
 import com.example.task.dto.TaskResponse;
 
@@ -13,4 +14,6 @@ public interface TaskService {
     TaskResponse findById(Long taskId);
 
     void delete(Long taskId);
+
+    Boolean answer(AnswerRequest request);
 }

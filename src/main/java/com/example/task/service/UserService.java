@@ -1,5 +1,6 @@
 package com.example.task.service;
 
+import com.example.task.dto.RankingResponse;
 import com.example.task.dto.UserRequest;
 import com.example.task.dto.UserResponse;
 
@@ -11,4 +12,6 @@ public interface UserService {
     List<UserResponse> getAll();
 
     void delete(String nickname);
+
+    List<RankingResponse> ranking(Boolean byPoint);
 }

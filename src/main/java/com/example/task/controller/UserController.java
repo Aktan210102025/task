@@ -1,8 +1,10 @@
 package com.example.task.controller;
 
+import com.example.task.dto.RankingResponse;
 import com.example.task.dto.UserRequest;
 import com.example.task.dto.UserResponse;
 import com.example.task.service.UserService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +27,10 @@ public class UserController {
     @DeleteMapping("/delete")
     public void delete(@RequestParam String nickname){
         userService.delete(nickname);
+    }
+
+    @GetMapping("/ranking")
+    public List<RankingResponse> ranking(@RequestParam Boolean byPoint){
+        return userService.ranking(byPoint);
     }
 }

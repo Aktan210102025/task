@@ -1,5 +1,6 @@
 package com.example.task.mapper.impl;
 
+import com.example.task.dto.RankingResponse;
 import com.example.task.dto.UserResponse;
 import com.example.task.entity.User;
 import com.example.task.mapper.UserMapper;
@@ -16,6 +17,23 @@ public class UserMapperImpl implements UserMapper {
         for (User user: all)
             userResponses.add(toResponse(user));
         return userResponses;
+    }
+
+    @Override
+    public List<RankingResponse> rankingResponses(List<User> users) {
+        List<RankingResponse> rankingResponses = new ArrayList<>();
+        for (User user: users)
+            rankingResponses.add(rankingResponse(user));
+        return rankingResponses;
+    }
+
+    private RankingResponse rankingResponse(User user) {
+        RankingResponse response = new RankingResponse();
+        response.setNickname(user.getNickname());
+        response.setPoint(user.getPoints());
+        response.setAnsweredTaskCount(user.getAnsweredTasks()!=null?
+                user.getAnsweredTasks().size(): 0);
+        return response;
     }
 
     private UserResponse toResponse(User user) {

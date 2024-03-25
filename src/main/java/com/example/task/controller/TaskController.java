@@ -1,7 +1,10 @@
 package com.example.task.controller;
 
+import com.example.task.dto.AnswerRequest;
 import com.example.task.dto.TaskRequest;
 import com.example.task.dto.TaskResponse;
+import com.example.task.dto.UserResponse;
+import com.example.task.entity.User;
 import com.example.task.service.TaskService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +35,10 @@ public class TaskController {
     public void delete(@PathVariable Long taskId){
         taskService.delete(taskId);
     }
+
+    @PostMapping("/answer")
+    public Boolean answer(@RequestBody AnswerRequest request){
+        return taskService.answer(request);
+    }
+
 }

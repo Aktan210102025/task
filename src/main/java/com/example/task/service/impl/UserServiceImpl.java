@@ -1,5 +1,6 @@
 package com.example.task.service.impl;
 
+import com.example.task.dto.RankingResponse;
 import com.example.task.dto.UserRequest;
 import com.example.task.dto.UserResponse;
 import com.example.task.entity.User;
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
     public void delete(String nickname) {
         taskRepository.deleteAllByAuthorNickname(nickname);
         userRepository.deleteByNickname(nickname);
+    }
+
+    @Override
+    public List<RankingResponse> ranking(Boolean byPoint) {
+        return userMapper.rankingResponses(byPoint? userRepository.findAllByOrderByPointsDesc(): userRepository.findAllUsersWithAnsweredTasksCountSorted());
     }
 }
