@@ -16,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByOrderByPointsDesc();
     @Query("SELECT u FROM User u LEFT JOIN u.answeredTasks t GROUP BY u ORDER BY COUNT(t) DESC")
     List<User> findAllUsersWithAnsweredTasksCountSorted();
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByConfirmationCode(String code);
 }

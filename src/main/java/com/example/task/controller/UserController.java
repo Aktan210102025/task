@@ -16,6 +16,19 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    @PostMapping("/register")
+    public void register(@RequestParam String email, @RequestParam String password){
+        userService.register(email, password);
+    }
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password){
+        return userService.login(email, password);
+    }
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam String code){
+        return userService.confirm(code);
+    }
+
     @PostMapping("/create")
     public void createUser(@RequestBody UserRequest request){
         userService.createUser(request);

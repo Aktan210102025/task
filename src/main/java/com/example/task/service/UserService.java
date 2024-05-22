@@ -14,4 +14,10 @@ public interface UserService {
     void delete(String nickname);
 
     List<RankingResponse> ranking(Boolean byPoint);
+
+    void register(String email, String password);
+
+    String login(String email, String password);
+
+    String confirm(String code);
 }
